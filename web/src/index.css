@@ -1,15 +1,29 @@
 :root {
   --bg: #1a1417;
   --surface: #241c20;
+  --surface-rgb: 36, 28, 32;
   --surface-2: #2e242a;
   --border: #3a2c33;
   --text: #f7f0f2;
   --text-dim: #9c8890;
   --accent: #ec6fa3;
+  --accent-2: #b98bf0;
   --accent-rgb: 236, 111, 163;
   --accent-dim: rgba(236, 111, 163, 0.15);
   --accent-glow: rgba(236, 111, 163, 0.5);
   --danger: #ef4444;
+
+  /* Liquid-glass surface tokens */
+  --glass-bg: rgba(var(--surface-rgb), 0.46);
+  --glass-bg-strong: rgba(var(--surface-rgb), 0.68);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.09);
+  --glass-blur: 26px;
+  --shadow-glass: 0 12px 34px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+
   color-scheme: dark;
   font: 16px/1.4 system-ui, 'Segoe UI', Roboto, sans-serif;
 }
@@ -17,15 +31,24 @@
 :root[data-theme='light'] {
   --bg: #fdf2f6;
   --surface: #ffffff;
+  --surface-rgb: 255, 255, 255;
   --surface-2: #fbeaf1;
   --border: #f3d7e3;
   --text: #2b1620;
   --text-dim: #8a6b76;
   --accent: #d84a86;
+  --accent-2: #9457d6;
   --accent-rgb: 216, 74, 134;
   --accent-dim: rgba(216, 74, 134, 0.12);
   --accent-glow: rgba(216, 74, 134, 0.35);
   --danger: #dc2626;
+
+  --glass-bg: rgba(var(--surface-rgb), 0.55);
+  --glass-bg-strong: rgba(var(--surface-rgb), 0.78);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-highlight: rgba(255, 255, 255, 0.8);
+  --shadow-glass: 0 12px 30px rgba(216, 74, 134, 0.16), 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+
   color-scheme: light;
 }
 
@@ -37,8 +60,15 @@
 body {
   margin: 0;
   overflow-x: hidden;
-  background: var(--bg);
+  min-height: 100svh;
   color: var(--text);
+  background: var(--bg);
+  background-image:
+    radial-gradient(680px 480px at 12% -6%, rgba(var(--accent-rgb), 0.32), transparent 60%),
+    radial-gradient(620px 460px at 100% 8%, rgba(185, 139, 240, 0.28), transparent 55%),
+    radial-gradient(700px 520px at 8% 100%, rgba(var(--accent-rgb), 0.2), transparent 60%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 #root {

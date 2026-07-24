@@ -1,10 +1,11 @@
 import { haptic } from './haptic';
+import { IconToday, IconCalendar, IconHeart, IconSettings } from './icons';
 
 const TABS = [
-  { key: 'today', label: 'Сегодня', icon: '📅' },
-  { key: 'calendar', label: 'Календарь', icon: '🗓️' },
-  { key: 'partner', label: 'Партнёр', icon: '💜' },
-  { key: 'settings', label: 'Настройки', icon: '⚙️' },
+  { key: 'today', label: 'Сегодня', Icon: IconToday },
+  { key: 'calendar', label: 'Календарь', Icon: IconCalendar },
+  { key: 'partner', label: 'Партнёр', Icon: IconHeart },
+  { key: 'settings', label: 'Настройки', Icon: IconSettings },
 ];
 
 export default function BottomNav({ active, onChange }) {
@@ -15,14 +16,16 @@ export default function BottomNav({ active, onChange }) {
 
   return (
     <nav className="bottom-nav">
-      {TABS.map((tab) => (
+      {TABS.map(({ key, label, Icon }) => (
         <button
-          key={tab.key}
-          className={`bottom-nav-item ${active === tab.key ? 'active' : ''}`}
-          onClick={() => handleClick(tab.key)}
+          key={key}
+          className={`bottom-nav-item ${active === key ? 'active' : ''}`}
+          onClick={() => handleClick(key)}
         >
-          <span className="bottom-nav-icon">{tab.icon}</span>
-          <span className="bottom-nav-label">{tab.label}</span>
+          <span className="bottom-nav-icon">
+            <Icon />
+          </span>
+          <span className="bottom-nav-label">{label}</span>
         </button>
       ))}
     </nav>
