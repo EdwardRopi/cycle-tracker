@@ -683,34 +683,44 @@ form {
 
 /* Settings */
 
-.theme-row {
+.setting-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 14px;
 }
 
-.theme-picker {
+.setting-row-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.segmented {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  gap: 2px;
+  width: 100%;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(var(--surface-rgb), 0.45);
+  border: 1px solid var(--glass-border);
 }
 
-.theme-option {
-  padding: 7px 13px;
+.segmented-option {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--glass-border);
-  background: rgba(var(--surface-rgb), 0.35);
   color: var(--text-dim);
   font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.theme-option.active {
-  border-color: var(--accent);
+.segmented-option.active {
+  background: linear-gradient(155deg, rgba(var(--accent-rgb), 0.32), rgba(var(--accent-rgb), 0.14));
   color: var(--text);
-  background: linear-gradient(155deg, rgba(var(--accent-rgb), 0.28), rgba(var(--accent-rgb), 0.08));
+  box-shadow: 0 2px 10px rgba(var(--accent-rgb), 0.3), inset 0 1px 0 var(--glass-highlight);
 }
 
 .stub {

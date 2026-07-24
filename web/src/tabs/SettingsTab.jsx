@@ -8,12 +8,12 @@ import { getStoredIconStyle, setIconStyle } from '../iconStyle';
 const THEME_OPTIONS = [
   { key: 'dark', label: 'Тёмная' },
   { key: 'light', label: 'Светлая' },
-  { key: 'auto', label: 'Как в Telegram' },
+  { key: 'auto', label: 'Авто' },
 ];
 
 const ICON_STYLE_OPTIONS = [
-  { key: 'neon', label: 'Розовый неон' },
-  { key: 'gold', label: 'Золотой премиум' },
+  { key: 'neon', label: 'Неон' },
+  { key: 'gold', label: 'Золото' },
 ];
 
 export default function SettingsTab({ user, setUser }) {
@@ -138,35 +138,38 @@ export default function SettingsTab({ user, setUser }) {
         {saved && <p className="success">Сохранено</p>}
       </section>
 
-      <section className="card theme-row">
-        <h2>Тема</h2>
-        <div className="theme-picker">
-          {THEME_OPTIONS.map((opt) => (
-            <div
-              key={opt.key}
-              className={`theme-option ${theme === opt.key ? 'active' : ''}`}
-              onClick={() => handleThemeChange(opt.key)}
-            >
-              {opt.label}
-            </div>
-          ))}
-        </div>
-      </section>
+      <section className="card">
+        <h2>Оформление</h2>
 
-      <section className="card theme-row">
-        <h2>Стиль иконок навигации</h2>
-        <div className="theme-picker">
-          {ICON_STYLE_OPTIONS.map((opt) => (
-            <div
-              key={opt.key}
-              className={`theme-option ${iconStyle === opt.key ? 'active' : ''}`}
-              onClick={() => handleIconStyleChange(opt.key)}
-            >
-              {opt.label}
-            </div>
-          ))}
+        <div className="setting-row">
+          <span className="setting-row-label">Тема</span>
+          <div className="segmented">
+            {THEME_OPTIONS.map((opt) => (
+              <div
+                key={opt.key}
+                className={`segmented-option ${theme === opt.key ? 'active' : ''}`}
+                onClick={() => handleThemeChange(opt.key)}
+              >
+                {opt.label}
+              </div>
+            ))}
+          </div>
         </div>
-        <p className="hint">Меняет подсветку активной вкладки внизу экрана</p>
+
+        <div className="setting-row">
+          <span className="setting-row-label">Иконки навигации</span>
+          <div className="segmented">
+            {ICON_STYLE_OPTIONS.map((opt) => (
+              <div
+                key={opt.key}
+                className={`segmented-option ${iconStyle === opt.key ? 'active' : ''}`}
+                onClick={() => handleIconStyleChange(opt.key)}
+              >
+                {opt.label}
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {error && <p className="error">{error}</p>}
