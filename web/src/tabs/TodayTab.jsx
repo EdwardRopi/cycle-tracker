@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { api } from '../api';
 import { haptic } from '../haptic';
 import Spinner from '../Spinner';
-import { MOODS, SYMPTOMS, PHASES, todayISO } from '../constants';
+import { MOODS, SYMPTOMS, PHASES, moodByKey, todayISO } from '../constants';
 
 export default function TodayTab() {
   const [cycleInfo, setCycleInfo] = useState(null);
@@ -10,6 +10,7 @@ export default function TodayTab() {
   const [mood, setMood] = useState(null);
   const [symptoms, setSymptoms] = useState([]);
   const [note, setNote] = useState('');
+  const [editing, setEditing] = useState(true);
   const [periodStart, setPeriodStart] = useState(todayISO());
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -27,6 +28,9 @@ export default function TodayTab() {
         setMood(existing.mood || null);
         setSymptoms(existing.symptoms || []);
         setNote(existing.note || '');
+        setEditing(false);
+      } else {
+        setEditing(true);
       }
     } catch (err) {
       setError(err.message);
@@ -67,6 +71,7 @@ export default function TodayTab() {
       setTodayLog(entry);
       haptic('success');
       setSaved(true);
+      setEditing(false);
       setTimeout(() => setSaved(false), 3000);
     } catch (err) {
       setError(err.message);
@@ -110,6 +115,7 @@ export default function TodayTab() {
   }
 
   const phase = PHASES[cycleInfo.phase];
+  const moodInfo = moodByKey(mood);
 
   return (
     <div className="tab-screen">
@@ -140,45 +146,71 @@ export default function TodayTab() {
       </section>
 
       <section className="card">
-        <h2>Как ты сегодня?</h2>
-        <form onSubmit={handleSaveLog}>
-          <div className="mood-grid">
-            {MOODS.map((m) => (
-              <div
-                key={m.key}
-                className={`mood-option ${mood === m.key ? 'active' : ''}`}
-                onClick={() => setMood(m.key)}
-              >
-                <span className="mood-icon">{m.icon}</span>
-                {m.label}
+        <div className="card-header-row">
+          <h2>Как ты сегодня?</h2>
+          {!editing && (
+            <button type="button" className="text-link" onClick={() => setEditing(true)}>
+              Изменить
+            </button>
+          )}
+        </div>
+
+        {!editing ? (
+          <div className="today-summary">
+            {moodInfo && (
+              <div className="today-summary-mood">
+                <span className="mood-icon">{moodInfo.icon}</span>
+                {moodInfo.label}
               </div>
-            ))}
-          </div>
-
-          <div className="symptom-grid">
-            {SYMPTOMS.map((s) => (
-              <div
-                key={s.key}
-                className={`symptom-chip ${symptoms.includes(s.key) ? 'active' : ''}`}
-                onClick={() => toggleSymptom(s.key)}
-              >
-                <span>{s.icon}</span>
-                {s.label}
+            )}
+            {symptoms.length > 0 && (
+              <div className="today-summary-symptoms">
+                {symptoms.map((s) => SYMPTOMS.find((sy) => sy.key === s)?.label || s).join(', ')}
               </div>
-            ))}
+            )}
+            {note && <p className="hint">{note}</p>}
+            {!moodInfo && symptoms.length === 0 && !note && <p className="hint">Запись на сегодня сохранена</p>}
           </div>
+        ) : (
+          <form onSubmit={handleSaveLog}>
+            <div className="mood-grid">
+              {MOODS.map((m) => (
+                <div
+                  key={m.key}
+                  className={`mood-option ${mood === m.key ? 'active' : ''}`}
+                  onClick={() => setMood(m.key)}
+                >
+                  <span className="mood-icon">{m.icon}</span>
+                  {m.label}
+                </div>
+              ))}
+            </div>
 
-          <textarea
-            placeholder="Заметка на сегодня (необязательно)"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            rows={2}
-          />
+            <div className="symptom-grid">
+              {SYMPTOMS.map((s) => (
+                <div
+                  key={s.key}
+                  className={`symptom-chip ${symptoms.includes(s.key) ? 'active' : ''}`}
+                  onClick={() => toggleSymptom(s.key)}
+                >
+                  <span>{s.icon}</span>
+                  {s.label}
+                </div>
+              ))}
+            </div>
 
-          <button type="submit" className="primary" disabled={busy}>
-            {todayLog ? 'Обновить' : 'Сохранить'}
-          </button>
-        </form>
+            <textarea
+              placeholder="Заметка на сегодня (необязательно)"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              rows={2}
+            />
+
+            <button type="submit" className="primary" disabled={busy}>
+              {todayLog ? 'Обновить' : 'Сохранить'}
+            </button>
+          </form>
+        )}
         {saved && <p className="success">Сохранено</p>}
       </section>
 

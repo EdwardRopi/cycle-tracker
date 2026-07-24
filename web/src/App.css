@@ -347,58 +347,110 @@ form {
 }
 
 .phase-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .phase-stat {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: rgba(var(--surface-rgb), 0.4);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 1px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.phase-stat:last-child {
+  border-bottom: none;
 }
 
 .phase-stat-label {
-  font-size: 11px;
+  font-size: 12.5px;
   color: var(--text-dim);
 }
 
 .phase-stat-value {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
+}
+
+/* Card header row (title + inline action) */
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-header-row h2 {
+  margin: 0;
+}
+
+.text-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Today summary (collapsed log view) */
+
+.today-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.today-summary-mood {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.today-summary-mood .mood-icon {
+  font-size: 20px;
+}
+
+.today-summary-symptoms {
+  font-size: 13px;
+  color: var(--text-dim);
 }
 
 /* Mood picker */
 
 .mood-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
 }
 
 .mood-option {
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 11px 4px;
+  gap: 3px;
+  padding: 8px 11px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
-  background: rgba(var(--surface-rgb), 0.35);
+  border: 1px solid transparent;
+  background: none;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 10.5px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .mood-option .mood-icon {
-  font-size: 22px;
+  font-size: 23px;
 }
 
 .mood-option.active {
@@ -414,19 +466,19 @@ form {
 .symptom-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px;
 }
 
 .symptom-chip {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 13px;
+  padding: 6px 12px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--glass-border);
-  background: rgba(var(--surface-rgb), 0.35);
+  border: 1px solid var(--border);
+  background: none;
   color: var(--text-dim);
-  font-size: 13px;
+  font-size: 12.5px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
