@@ -21,6 +21,9 @@
           }
         }
         document.documentElement.dataset.theme = theme;
+
+        var iconStyle = localStorage.getItem('cycle-tracker-icon-style');
+        document.documentElement.dataset.iconStyle = iconStyle === 'gold' ? 'gold' : 'neon';
       })();
     </script>
   </head>

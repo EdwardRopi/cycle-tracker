@@ -104,7 +104,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
+  border-radius: 50%;
+  border: 1.5px solid transparent;
   transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -115,17 +116,67 @@
 }
 
 .bottom-nav-item.active .bottom-nav-icon {
-  background: linear-gradient(155deg, rgba(var(--accent-rgb), 0.28), rgba(var(--accent-rgb), 0.1));
-  box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.35), inset 0 1px 0 var(--glass-highlight);
-  transform: translateY(-1px) scale(1.05);
-}
-
-.bottom-nav-item.active .bottom-nav-icon svg {
-  filter: drop-shadow(0 0 6px var(--accent-glow));
+  transform: translateY(-1px) scale(1.06);
 }
 
 .bottom-nav-item.active .bottom-nav-label {
   text-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Icon badge style — Розовый неон (default) */
+
+:root[data-icon-style='neon'] .bottom-nav-item.active .bottom-nav-icon {
+  background: linear-gradient(155deg, #ff5fa8 0%, #ff8fc7 45%, #ffd1ea 100%);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 16px rgba(255, 95, 168, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  animation: navPulseGlow 2.8s ease-in-out infinite;
+}
+
+:root[data-icon-style='neon'] .bottom-nav-item.active .bottom-nav-icon svg {
+  color: #ffffff;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+}
+
+@keyframes navPulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 4px 16px rgba(255, 95, 168, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  50% {
+    box-shadow: 0 4px 22px rgba(255, 95, 168, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Icon badge style — Золотой премиум */
+
+:root[data-icon-style='gold'] .bottom-nav-item.active {
+  color: #e8c15f;
+}
+
+:root[data-icon-style='gold'] .bottom-nav-item.active .bottom-nav-icon {
+  background: linear-gradient(160deg, #2b2b2b 0%, #171717 60%, #0a0a0a 100%);
+  border-color: rgba(232, 193, 95, 0.6);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 224, 150, 0.3);
+  animation: navGoldShine 3.4s ease-in-out infinite;
+}
+
+:root[data-icon-style='gold'] .bottom-nav-item.active .bottom-nav-icon svg {
+  color: #e8c15f;
+  filter: drop-shadow(0 0 3px rgba(232, 193, 95, 0.5));
+}
+
+:root[data-icon-style='gold'] .bottom-nav-item.active .bottom-nav-label {
+  text-shadow: 0 0 8px rgba(232, 193, 95, 0.5);
+}
+
+@keyframes navGoldShine {
+  0%,
+  100% {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 224, 150, 0.25);
+  }
+  50% {
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 224, 150, 0.45);
+  }
 }
 
 /* Forms & buttons */

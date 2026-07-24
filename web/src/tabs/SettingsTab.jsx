@@ -3,11 +3,17 @@ import { api } from '../api';
 import { haptic } from '../haptic';
 import Spinner from '../Spinner';
 import { getStoredPreference, setThemePreference } from '../theme';
+import { getStoredIconStyle, setIconStyle } from '../iconStyle';
 
 const THEME_OPTIONS = [
   { key: 'dark', label: 'Тёмная' },
   { key: 'light', label: 'Светлая' },
   { key: 'auto', label: 'Как в Telegram' },
+];
+
+const ICON_STYLE_OPTIONS = [
+  { key: 'neon', label: 'Розовый неон' },
+  { key: 'gold', label: 'Золотой премиум' },
 ];
 
 export default function SettingsTab({ user, setUser }) {
@@ -16,6 +22,7 @@ export default function SettingsTab({ user, setUser }) {
   const [periodLength, setPeriodLength] = useState(5);
   const [displayName, setDisplayName] = useState(user?.display_name || user?.first_name || '');
   const [theme, setTheme] = useState(getStoredPreference());
+  const [iconStyle, setIconStyleState] = useState(getStoredIconStyle());
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -36,6 +43,12 @@ export default function SettingsTab({ user, setUser }) {
   function handleThemeChange(key) {
     setTheme(key);
     setThemePreference(key);
+    haptic('selection');
+  }
+
+  function handleIconStyleChange(key) {
+    setIconStyleState(key);
+    setIconStyle(key);
     haptic('selection');
   }
 
@@ -138,6 +151,22 @@ export default function SettingsTab({ user, setUser }) {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="card theme-row">
+        <h2>Стиль иконок навигации</h2>
+        <div className="theme-picker">
+          {ICON_STYLE_OPTIONS.map((opt) => (
+            <div
+              key={opt.key}
+              className={`theme-option ${iconStyle === opt.key ? 'active' : ''}`}
+              onClick={() => handleIconStyleChange(opt.key)}
+            >
+              {opt.label}
+            </div>
+          ))}
+        </div>
+        <p className="hint">Меняет подсветку активной вкладки внизу экрана</p>
       </section>
 
       {error && <p className="error">{error}</p>}

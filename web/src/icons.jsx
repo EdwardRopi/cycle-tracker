@@ -9,9 +9,12 @@ const common = {
 export function IconToday(props) {
   return (
     <svg {...common} {...props}>
+      <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.8" />
       <path
-        d="M12 3.2c.55 3.1 1.75 5.5 3.7 7.1 1.95 1.6 4.2 2.4 5.1 2.7-.9.3-3.15 1.1-5.1 2.7-1.95 1.6-3.15 4-3.7 7.1-.55-3.1-1.75-5.5-3.7-7.1C6.35 14 4.1 13.2 3.2 12.9c.9-.3 3.15-1.1 5.1-2.7C10.25 8.6 11.45 6.3 12 3.2Z"
-        fill="currentColor"
+        d="M12 1.5v3M12 19.5v3M22.5 12h-3M4.5 12h-3M19.4 4.6l-2.1 2.1M6.7 17.3l-2.1 2.1M19.4 19.4l-2.1-2.1M6.7 6.7L4.6 4.6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
       />
     </svg>
   );
@@ -20,9 +23,9 @@ export function IconToday(props) {
 export function IconCalendar(props) {
   return (
     <svg {...common} {...props}>
-      <rect x="4" y="5.3" width="16" height="15.2" rx="4.2" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M8.2 3.4v4M15.8 3.4v4M4.15 10.1h15.7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-      <circle cx="12" cy="15.3" r="1.5" fill="currentColor" />
+      <rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M3 10h18M8 2.5v5M16 2.5v5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="12" cy="15.5" r="2" fill="currentColor" />
     </svg>
   );
 }
@@ -30,12 +33,10 @@ export function IconCalendar(props) {
 export function IconHeart(props) {
   return (
     <svg {...common} {...props}>
-      <path
-        d="M12 20.1s-7.15-4.45-9.55-8.8C.85 7.9 1.85 4.7 4.75 3.55c2.15-.85 4.5 0 5.75 1.95.3.45.45.85.5 1.05.05-.2.2-.6.5-1.05C12.75 3.5 15.1 2.65 17.25 3.5c2.9 1.15 3.9 4.35 2.3 7.75-2.4 4.35-9.55 8.85-9.55 8.85Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
+      <circle cx="8.5" cy="9" r="3.6" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="16" cy="10.5" r="2.8" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M2.5 20.5c0-3.6 2.9-6 6-6s6 2.4 6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M14 15.2c2.6 .3 4.6 2.3 4.6 5.3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   );
 }
@@ -43,9 +44,13 @@ export function IconHeart(props) {
 export function IconSettings(props) {
   return (
     <svg {...common} {...props}>
-      <path d="M4 7.2h9.2M17.4 7.2h2.6M4 17h2.6M10.8 17h9.2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-      <circle cx="15.4" cy="7.2" r="2.3" stroke="currentColor" strokeWidth="1.7" fill="var(--glass-bg-strong)" />
-      <circle cx="8.6" cy="17" r="2.3" stroke="currentColor" strokeWidth="1.7" fill="var(--glass-bg-strong)" />
+      <circle cx="12" cy="12" r="3.4" stroke="currentColor" strokeWidth="1.8" />
+      <path
+        d="M12 2.5v2.6M12 18.9v2.6M21.5 12h-2.6M5.1 12H2.5M18.4 5.6l-1.9 1.9M7.5 16.5l-1.9 1.9M18.4 18.4l-1.9-1.9M7.5 7.5L5.6 5.6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
