@@ -347,28 +347,29 @@ form {
 }
 
 .phase-stats {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
   width: 100%;
   margin-top: 6px;
 }
 
 .phase-stat {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 9px 1px;
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.phase-stat:last-child {
-  border-bottom: none;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(var(--surface-rgb), 0.3);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  overflow: hidden;
 }
 
 .phase-stat-label {
-  font-size: 12.5px;
+  font-size: 10.5px;
   color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .phase-stat-value {

@@ -33,3 +33,20 @@ export function todayISO() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
+
+const MONTHS_SHORT = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+
+// Парсим строки вручную, а не через new Date(iso) — избегаем сдвига на часовой пояс
+export function formatShortDate(iso) {
+  const [, m, d] = iso.split('-').map(Number);
+  return `${d} ${MONTHS_SHORT[m - 1]}`;
+}
+
+export function formatShortRange(startIso, endIso) {
+  const [, ms, ds] = startIso.split('-').map(Number);
+  const [, me, de] = endIso.split('-').map(Number);
+  if (ms === me) {
+    return `${ds}–${de} ${MONTHS_SHORT[ms - 1]}`;
+  }
+  return `${formatShortDate(startIso)} – ${formatShortDate(endIso)}`;
+}

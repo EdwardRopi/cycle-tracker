@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api';
 import Spinner from '../Spinner';
-import { SYMPTOMS, PHASES, moodByKey } from '../constants';
+import { SYMPTOMS, PHASES, moodByKey, formatShortDate } from '../constants';
 
 export default function PartnerDashboard() {
   const [data, setData] = useState(null);
@@ -50,12 +50,12 @@ export default function PartnerDashboard() {
           <span className="phase-label">{phase.label}</span>
           <div className="phase-stats">
             <div className="phase-stat">
-              <span className="phase-stat-label">Следующие месячные</span>
-              <span className="phase-stat-value">{cycle.predictedNextPeriod}</span>
+              <span className="phase-stat-label">Месячные</span>
+              <span className="phase-stat-value">{formatShortDate(cycle.predictedNextPeriod)}</span>
             </div>
             <div className="phase-stat">
               <span className="phase-stat-label">Овуляция</span>
-              <span className="phase-stat-value">{cycle.predictedOvulation}</span>
+              <span className="phase-stat-value">{formatShortDate(cycle.predictedOvulation)}</span>
             </div>
           </div>
         </section>
@@ -68,7 +68,7 @@ export default function PartnerDashboard() {
           const moodInfo = moodByKey(log.mood);
           return (
             <div key={log.date} className="log-row">
-              <span className="log-row-date">{log.date}</span>
+              <span className="log-row-date">{formatShortDate(log.date)}</span>
               {moodInfo && (
                 <span className="log-row-mood">
                   {moodInfo.icon} {moodInfo.label}

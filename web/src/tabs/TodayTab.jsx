@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { api } from '../api';
 import { haptic } from '../haptic';
 import Spinner from '../Spinner';
-import { MOODS, SYMPTOMS, PHASES, moodByKey, todayISO } from '../constants';
+import { MOODS, SYMPTOMS, PHASES, moodByKey, todayISO, formatShortDate, formatShortRange } from '../constants';
 
 export default function TodayTab() {
   const [cycleInfo, setCycleInfo] = useState(null);
@@ -125,17 +125,17 @@ export default function TodayTab() {
         <span className="phase-label">{phase.label}</span>
         <div className="phase-stats">
           <div className="phase-stat">
-            <span className="phase-stat-label">Следующие месячные</span>
-            <span className="phase-stat-value">{cycleInfo.predictedNextPeriod}</span>
+            <span className="phase-stat-label">Месячные</span>
+            <span className="phase-stat-value">{formatShortDate(cycleInfo.predictedNextPeriod)}</span>
           </div>
           <div className="phase-stat">
             <span className="phase-stat-label">Овуляция</span>
-            <span className="phase-stat-value">{cycleInfo.predictedOvulation}</span>
+            <span className="phase-stat-value">{formatShortDate(cycleInfo.predictedOvulation)}</span>
           </div>
           <div className="phase-stat">
             <span className="phase-stat-label">Фертильное окно</span>
             <span className="phase-stat-value">
-              {cycleInfo.fertileWindow.start} – {cycleInfo.fertileWindow.end}
+              {formatShortRange(cycleInfo.fertileWindow.start, cycleInfo.fertileWindow.end)}
             </span>
           </div>
           <div className="phase-stat">

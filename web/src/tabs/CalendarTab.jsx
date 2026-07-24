@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api';
 import { haptic } from '../haptic';
 import Spinner from '../Spinner';
-import { MOODS, SYMPTOMS, todayISO } from '../constants';
+import { MOODS, SYMPTOMS, todayISO, formatShortDate } from '../constants';
 
 const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
@@ -239,8 +239,8 @@ export default function CalendarTab() {
           {cycles.map((c) => (
             <li key={c.id} className="cycle-row">
               <span>
-                {c.start_date}
-                {c.end_date ? ` – ${c.end_date}` : ''}
+                {formatShortDate(c.start_date)}
+                {c.end_date ? ` – ${formatShortDate(c.end_date)}` : ''}
               </span>
               <button className="icon-button" onClick={() => handleDeleteCycle(c.id)} disabled={busy}>
                 Удалить
