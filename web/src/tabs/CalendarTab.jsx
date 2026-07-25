@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api';
 import { haptic } from '../haptic';
 import Spinner from '../Spinner';
-import { MOODS, SYMPTOMS, todayISO, formatShortDate } from '../constants';
+import { MOODS, SYMPTOMS, todayISO, formatShortDate, moodByKey } from '../constants';
 
 const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
@@ -34,6 +34,7 @@ export default function CalendarTab() {
   const [cycles, setCycles] = useState([]);
   const [logs, setLogs] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [editingDay, setEditingDay] = useState(false);
   const [mood, setMood] = useState(null);
   const [symptoms, setSymptoms] = useState([]);
   const [note, setNote] = useState('');
@@ -90,6 +91,7 @@ export default function CalendarTab() {
     setMood(existing?.mood || null);
     setSymptoms(existing?.symptoms || []);
     setNote(existing?.note || '');
+    setEditingDay(!existing);
   }
 
   function toggleSymptom(key) {
@@ -103,6 +105,7 @@ export default function CalendarTab() {
     try {
       await api.saveDailyLog({ date: selected, mood, symptoms, note: note.trim() || null });
       haptic('success');
+      setEditingDay(false);
       await load();
     } catch (err) {
       setError(err.message);
@@ -154,11 +157,11 @@ export default function CalendarTab() {
   return (
     <div className="tab-screen">
       <div className="calendar-header">
-        <button className="icon-button" style={{ color: 'var(--text)' }} onClick={() => changeMonth(-1)}>
+        <button className="calendar-nav-btn" onClick={() => changeMonth(-1)}>
           ‹
         </button>
-        <strong style={{ textTransform: 'capitalize' }}>{monthLabel}</strong>
-        <button className="icon-button" style={{ color: 'var(--text)' }} onClick={() => changeMonth(1)}>
+        <span className="calendar-month-label">{monthLabel}</span>
+        <button className="calendar-nav-btn" onClick={() => changeMonth(1)}>
           ›
         </button>
       </div>
@@ -198,37 +201,62 @@ export default function CalendarTab() {
 
       {selected && (
         <section className="card">
-          <h2>{selected}</h2>
-          <form onSubmit={handleSaveLog}>
-            <div className="mood-grid">
-              {MOODS.map((m) => (
-                <div
-                  key={m.key}
-                  className={`mood-option ${mood === m.key ? 'active' : ''}`}
-                  onClick={() => setMood(m.key)}
-                >
-                  <span className="mood-icon">{m.icon}</span>
-                  {m.label}
+          <div className="card-header-row">
+            <h2>{formatShortDate(selected)}</h2>
+            {!editingDay && (
+              <button type="button" className="text-link" onClick={() => setEditingDay(true)}>
+                Изменить
+              </button>
+            )}
+          </div>
+
+          {!editingDay ? (
+            <div className="today-summary">
+              {mood && (
+                <div className="today-summary-mood">
+                  <span className="mood-icon">{moodByKey(mood)?.icon}</span>
+                  {moodByKey(mood)?.label}
                 </div>
-              ))}
-            </div>
-            <div className="symptom-grid">
-              {SYMPTOMS.map((s) => (
-                <div
-                  key={s.key}
-                  className={`symptom-chip ${symptoms.includes(s.key) ? 'active' : ''}`}
-                  onClick={() => toggleSymptom(s.key)}
-                >
-                  <span>{s.icon}</span>
-                  {s.label}
+              )}
+              {symptoms.length > 0 && (
+                <div className="today-summary-symptoms">
+                  {symptoms.map((s) => SYMPTOMS.find((sy) => sy.key === s)?.label || s).join(', ')}
                 </div>
-              ))}
+              )}
+              {note && <p className="hint">{note}</p>}
             </div>
-            <textarea placeholder="Заметка" value={note} onChange={(e) => setNote(e.target.value)} rows={2} />
-            <button type="submit" className="primary" disabled={busy}>
-              Сохранить
-            </button>
-          </form>
+          ) : (
+            <form onSubmit={handleSaveLog}>
+              <div className="mood-grid">
+                {MOODS.map((m) => (
+                  <div
+                    key={m.key}
+                    className={`mood-option ${mood === m.key ? 'active' : ''}`}
+                    onClick={() => setMood(m.key)}
+                  >
+                    <span className="mood-icon">{m.icon}</span>
+                    {m.label}
+                  </div>
+                ))}
+              </div>
+              <div className="symptom-grid">
+                {SYMPTOMS.map((s) => (
+                  <div
+                    key={s.key}
+                    className={`symptom-chip ${symptoms.includes(s.key) ? 'active' : ''}`}
+                    onClick={() => toggleSymptom(s.key)}
+                  >
+                    <span>{s.icon}</span>
+                    {s.label}
+                  </div>
+                ))}
+              </div>
+              <textarea placeholder="Заметка" value={note} onChange={(e) => setNote(e.target.value)} rows={2} />
+              <button type="submit" className="primary" disabled={busy}>
+                Сохранить
+              </button>
+            </form>
+          )}
         </section>
       )}
 
@@ -242,8 +270,8 @@ export default function CalendarTab() {
                 {formatShortDate(c.start_date)}
                 {c.end_date ? ` – ${formatShortDate(c.end_date)}` : ''}
               </span>
-              <button className="icon-button" onClick={() => handleDeleteCycle(c.id)} disabled={busy}>
-                Удалить
+              <button className="icon-button" onClick={() => handleDeleteCycle(c.id)} disabled={busy} aria-label="Удалить">
+                ✕
               </button>
             </li>
           ))}
